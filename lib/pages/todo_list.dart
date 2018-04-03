@@ -1,9 +1,31 @@
 import 'package:flutter/material.dart';
 
-class TodoListPage extends StatelessWidget {
-  final List<String> tasks;
+class TodoListPage extends StatefulWidget {
+  TodoListPage({Key key}) : super(key: key);
 
-  TodoListPage({Key key, this.tasks}) : super(key: key);
+  @override
+  TodoListPageState createState() => new TodoListPageState();
+}
+
+class TodoListPageState extends State<TodoListPage> {
+  List<String> tasks = new List<String>();
+
+  @override
+  void initState() {
+    super.initState();
+
+    setState(() {
+      this.tasks = List.generate(5, (index) {
+        return 'Task ${index+1}';
+      });
+    });
+  }
+
+  void _appendTask() {
+    setState(() {
+      this.tasks.add('Hey');
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -16,9 +38,7 @@ class TodoListPage extends StatelessWidget {
         },
       ),
       floatingActionButton: new FloatingActionButton(
-        onPressed: () {
-          debugPrint('print');
-        },
+        onPressed: _appendTask,
         tooltip: 'New Task',
         child: new Icon(Icons.add)
       ),
