@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_todo/pages/todo_list.dart';
 
-void main() => runApp(new MyApp());
+void main() => runApp(new TodoApp());
 
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+class TodoApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    List<String> tasks = List.generate(5, (index) {
+      return 'Task ${index+1}';
+    });
+
     return new MaterialApp(
       title: 'Todo App',
       theme: new ThemeData(
         primarySwatch: Colors.indigo,
       ),
-      home: new MyHomePage(title: 'Tasks'),
+      home: new TodoListPage(tasks: tasks),
     );
   }
 }
