@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_todo/widgets/todo_list_item.dart';
 
 class TodoListPage extends StatefulWidget {
   TodoListPage({Key key}) : super(key: key);
@@ -34,7 +35,7 @@ class TodoListPageState extends State<TodoListPage> {
       body: ListView.builder(
         itemCount: tasks.length,
         itemBuilder: (context, index) {
-          return new Text(tasks.elementAt(index));
+          return new TodoListItem(title: tasks.elementAt(index));
         },
       ),
       floatingActionButton: new FloatingActionButton(
