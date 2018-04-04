@@ -1,5 +1,7 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_todo/widgets/todo_list_item.dart';
+import 'package:flutter_todo/entities/task.dart';
 
 class TodoListPage extends StatefulWidget {
   TodoListPage({Key key}) : super(key: key);
@@ -9,7 +11,7 @@ class TodoListPage extends StatefulWidget {
 }
 
 class TodoListPageState extends State<TodoListPage> {
-  List<String> tasks = new List<String>();
+  List<Task> tasks = new List<Task>();
 
   @override
   void initState() {
@@ -17,14 +19,14 @@ class TodoListPageState extends State<TodoListPage> {
 
     setState(() {
       this.tasks = List.generate(5, (index) {
-        return 'Task ${index+1}';
+        return new Task('Task ${index+1}');
       });
     });
   }
 
   void _appendTask() {
     setState(() {
-      this.tasks.add('Hey');
+      this.tasks.add(new Task('Hey'));
     });
   }
 
@@ -35,7 +37,17 @@ class TodoListPageState extends State<TodoListPage> {
       body: ListView.builder(
         itemCount: tasks.length,
         itemBuilder: (context, index) {
-          return new TodoListItem(title: tasks.elementAt(index));
+          final task = this.tasks.elementAt(index);
+
+          return new Dismissible(
+            key: new Key(task.id),
+            child: new TodoListItem(title: task.title),
+            onDismissed: (direction) {
+              setState(() {
+                this.tasks.removeAt(index);
+              });
+            }
+          );
         },
       ),
       floatingActionButton: new FloatingActionButton(
